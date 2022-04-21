@@ -1,6 +1,6 @@
 package com.letscode.harrypotter.student.service.clients;
 
-import com.letscode.harrypotter.student.dto.SortingHatResponse;
+import com.letscode.harrypotter.student.dto.SortingHatChoiceResponse;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
@@ -9,7 +9,7 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class SortingHatClient {
 
-  public SortingHatResponse execute() {
+  public SortingHatChoiceResponse getSortingHatChoice() {
     try {
       RestTemplate restTemplate = new RestTemplate();
 
@@ -18,11 +18,11 @@ public class SortingHatClient {
       headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
       HttpEntity<?> entity = new HttpEntity<>(headers);
 
-      ResponseEntity<SortingHatResponse> sortingHatResponseEntity = restTemplate.exchange(
+      ResponseEntity<SortingHatChoiceResponse> sortingHatResponseEntity = restTemplate.exchange(
           url,
           HttpMethod.GET,
           entity,
-          SortingHatResponse.class);
+          SortingHatChoiceResponse.class);
       return sortingHatResponseEntity.getBody();
     } catch (RestClientException clientException) {
       clientException.printStackTrace();

@@ -6,14 +6,14 @@ public class StudentMapper {
 
   private StudentMapper() {}
 
-  public static Student toDomain(CreateStudentRequest createStudentRequest) {
+  public static Student toStudent(CreateStudentRequest createStudentRequest) {
     return Student.builder()
         .name(createStudentRequest.getName())
         .grade(createStudentRequest.getGrade())
         .build();
   }
 
-  public static CreateStudentResponse toDto(Student student) {
+  public static CreateStudentResponse toCreateStudentResponse(Student student) {
     return CreateStudentResponse.builder()
         .id(student.getId())
         .name(student.getName())

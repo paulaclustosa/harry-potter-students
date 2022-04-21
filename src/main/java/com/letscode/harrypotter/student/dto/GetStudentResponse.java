@@ -10,5 +10,5 @@ public class GetStudentResponse {
   Integer id;
   String name;
   Grade grade;
-  String houseName;
+  String harryPotterHouseName;
 }

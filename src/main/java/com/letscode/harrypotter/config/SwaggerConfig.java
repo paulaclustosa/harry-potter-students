@@ -1,4 +1,4 @@
-package com.letscode.harrypotter.student.config;
+package com.letscode.harrypotter.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

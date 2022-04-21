@@ -1,15 +1,15 @@
 package com.letscode.harrypotter.student.service.clients;
 
-import com.letscode.harrypotter.student.dto.HouseResponse;
+import com.letscode.harrypotter.student.dto.HarryPotterHouseResponse;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class HouseClient {
+public class HarryPotterHouseClient {
 
-  public HouseResponse execute(String sortingHatChoice) {
+  public HarryPotterHouseResponse getHarryPotterHouse(String sortingHatChoice) {
     try {
       RestTemplate restTemplate = new RestTemplate();
 
@@ -18,11 +18,11 @@ public class HouseClient {
       headers.set(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE);
       HttpEntity<?> entity = new HttpEntity<>(headers);
 
-      ResponseEntity<HouseResponse> response = restTemplate.exchange(
+      ResponseEntity<HarryPotterHouseResponse> response = restTemplate.exchange(
           url,
           HttpMethod.GET,
           entity,
-          HouseResponse.class);
+          HarryPotterHouseResponse.class);
       return response.getBody();
     } catch (RestClientException clientException) {
       clientException.printStackTrace();

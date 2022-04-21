@@ -1,11 +1,7 @@
 package com.letscode.harrypotter.student.controller;
 
-import com.letscode.harrypotter.student.dto.CreateStudentRequest;
-import com.letscode.harrypotter.student.dto.CreateStudentResponse;
-import com.letscode.harrypotter.student.dto.GetStudentResponse;
-import com.letscode.harrypotter.student.dto.HouseResponse;
-import com.letscode.harrypotter.student.service.StudentCreator;
-import com.letscode.harrypotter.student.service.StudentSearcher;
+import com.letscode.harrypotter.student.dto.*;
+import com.letscode.harrypotter.student.service.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,13 +18,13 @@ import java.net.URI;
 @CrossOrigin(origins = "*")
 public class StudentController {
 
-  final StudentCreator studentCreator;
-  final StudentSearcher studentSearcher;
+  final CreateStudent createStudent;
+  final GetStudent getStudent;
 
   @Autowired
-  public StudentController(StudentCreator studentCreator, StudentSearcher studentSearcher) {
-    this.studentCreator = studentCreator;
-    this.studentSearcher = studentSearcher;
+  public StudentController(CreateStudent createStudent, GetStudent getStudent) {
+    this.createStudent = createStudent;
+    this.getStudent = getStudent;
   }
 
   @PostMapping("/students")
@@ -37,17 +33,17 @@ public class StudentController {
       @RequestBody CreateStudentRequest createStudentRequest,
       UriComponentsBuilder uriComponentsBuilder
   ) {
-    CreateStudentResponse createStudentResponse = studentCreator.execute(createStudentRequest);
-    URI uri = uriComponentsBuilder.path("/api/students/{sortingHatChoice}").buildAndExpand(createStudentResponse.getSortingHatChoice()).toUri();
+    CreateStudentResponse createStudentResponse = createStudent.execute(createStudentRequest);
+    URI uri = uriComponentsBuilder.path("/api/students/{id}").buildAndExpand(createStudentResponse.getId()).toUri();
     return ResponseEntity.created(uri).body(createStudentResponse);
   }
 
   @GetMapping("/students/{id}")
-  @ApiOperation(value = "Retrieves a created student and its information.")
+  @ApiOperation(value = "Retrieves a created student and its information (id, name, grade, and it's house name - from Harry Potter movie).")
   public ResponseEntity<GetStudentResponse> getStudent(
       @PathVariable(value = "id") Integer studentId
   ) throws ChangeSetPersister.NotFoundException {
-    return ResponseEntity.ok().body(studentSearcher.execute(studentId));
+    return ResponseEntity.ok().body(getStudent.execute(studentId));
   }
 
 }
